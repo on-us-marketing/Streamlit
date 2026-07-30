@@ -1,0 +1,12 @@
+Metadata-Version: 2.4
+Name: on-us-content-agent
+Version: 0.1.0
+Summary: On-us Master Content Generator agent POC
+Requires-Python: <3.14,>=3.10
+Requires-Dist: streamlit<2,>=1.36
+Requires-Dist: python-dotenv>=1.2.0
+Requires-Dist: pyyaml>=6.0.0
+Requires-Dist: google-auth<3,>=2.30
+Requires-Dist: requests<3,>=2.32
+Provides-Extra: crewai
+Requires-Dist: crewai>=1.15.2; extra == "crewai"

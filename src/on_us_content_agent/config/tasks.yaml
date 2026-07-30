@@ -1,0 +1,146 @@
+tasks:
+  gap_check:
+    stage: Discovery and Planning
+    agent: gap_finder_agent
+    purpose: >
+      Check whether the human request has enough input and identify missing topics,
+      SEO/GEO/AEO opportunities, and claim risks before planning.
+    input_required:
+      - topic
+      - market
+      - content_type
+      - target_audience
+      - channel
+      - supporting_notes
+    expected_output: >
+      Missing input report, topic gap list, SEO/GEO/AEO opportunity notes, risky claims,
+      and recommendation on whether to proceed.
+
+  plan_content:
+    stage: Discovery and Planning
+    agent: planning_agent
+    depends_on:
+      - gap_check
+    purpose: >
+      Define audience, market, content type, writing angle, CTA direction, product route,
+      case route, and KB routing plan.
+    expected_output: >
+      A planning brief with content cluster, TA, objective, angle, CTA direction, product
+      route, case route, KB files to load, assumptions, and open questions.
+
+  retrieve_context:
+    stage: Context and Retrieval
+    agent: research_agent
+    depends_on:
+      - plan_content
+    purpose: >
+      Retrieve and summarize supporting facts, source links, product context, case studies,
+      proof points, keyword bank entries, translation terms, and governance rules.
+    expected_output: >
+      Source trace by purpose, selected KB file rationale, supporting facts, missing evidence,
+      and claim boundaries.
+
+  build_structure:
+    stage: Master Content Generator
+    agent: structure_agent
+    depends_on:
+      - retrieve_context
+    purpose: >
+      Build the outline and message flow for the master content.
+    expected_output: >
+      Section-by-section outline, message flow, proof placement, CTA placement, and depth guidance.
+
+  draft_master_content:
+    stage: Master Content Generator
+    agent: writer_agent
+    depends_on:
+      - retrieve_context
+      - build_structure
+    purpose: >
+      Generate a factual, structured, business-outcome-led master content draft.
+    expected_output: >
+      Complete master content draft with market context, audience pain point, On-us POV,
+      product explanation, proof / case support, claim boundaries, CTA options, open
+      questions, and reference trace.
+
+  recommend_visuals:
+    stage: Master Content Generator
+    agent: visual_recommendation_agent
+    depends_on:
+      - draft_master_content
+    purpose: >
+      Recommend product-led, case-led, workflow-led, chart-based, or social-card visuals
+      that support the content.
+    expected_output: >
+      Visual recommendation notes, safe visual text, suggested layout, assets needed,
+      and approval risks.
+
+  optimize_content:
+    stage: Review and Optimization
+    agent: optimization_agent
+    depends_on:
+      - draft_master_content
+      - recommend_visuals
+    purpose: >
+      Improve SEO/AEO/GEO fit, content clarity, structure, answerability, and repurpose
+      readiness without adding unsupported claims.
+    expected_output: >
+      Optimized master content or edit notes, SEO/AEO/GEO notes, keyword usage notes,
+      and remaining open questions.
+
+  review_and_safeguard:
+    stage: Review and Optimization
+    agent: evaluation_safeguarding_agent
+    depends_on:
+      - optimize_content
+    purpose: >
+      Check brand voice, claims, localization, product accuracy, partner governance,
+      case privacy, and format before human review.
+    checks:
+      - Brand voice and approved terminology
+      - Claim scope hierarchy
+      - Product accuracy
+      - Partner / second-party governance
+      - Case privacy and client-metric pairing
+      - Localization and translation dictionary
+      - Format readiness
+    expected_output: >
+      Pass / Fail review, required fixes, risk notes, human review questions, and a Repurpose
+      Governance Handoff separating safe public claims from approval-dependent and never-use items.
+
+  rewrite_for_channel:
+    stage: Repurpose Agents
+    agent: content_rewriter_agent
+    depends_on:
+      - review_and_safeguard
+    purpose: >
+      Adapt reviewed master content into requested channel drafts such as LinkedIn,
+      newsletter, blog excerpt, news summary, or sales email.
+    expected_output: >
+      Channel-specific clean copy with claim cautions carried forward. LinkedIn must use the
+      On-us brand voice as its highest-priority style reference, lead with its strongest message,
+      stay at light awareness / marketing-distribution depth, vary emoji by topic, follow American
+      English by default, and preserve every governance restriction from the reviewer handoff.
+
+  localize_content:
+    stage: Repurpose Agents
+    agent: content_translator_agent
+    depends_on:
+      - review_and_safeguard
+    purpose: >
+      Localize approved content for selected market and language using the translation
+      dictionary and language rules.
+    expected_output: >
+      Localized content, terminology notes, missing translation questions, and localization risks.
+
+  format_for_publishing:
+    stage: Repurpose Agents
+    agent: formatting_agent
+    depends_on:
+      - rewrite_for_channel
+      - localize_content
+    purpose: >
+      Prepare reviewed content for Webflow, Excel / SharePoint content hub, or other
+      publishing formats.
+    expected_output: >
+      Structured publishing output, metadata fields, formatting notes, and missing field questions.

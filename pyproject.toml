@@ -1,0 +1,19 @@
+[project]
+name = "on-us-content-agent"
+version = "0.1.0"
+description = "On-us Master Content Generator agent POC"
+requires-python = ">=3.10,<3.14"
+dependencies = [
+  "streamlit>=1.36,<2",
+  "python-dotenv>=1.2.0",
+  "pyyaml>=6.0.0",
+  "google-auth>=2.30,<3",
+  "requests>=2.32,<3"
+]
+
+[project.optional-dependencies]
+crewai = ["crewai>=1.15.2"]
+
+[tool.on_us_content_agent]
+default_kb = "knowledge_base"
+default_output_dir = "outputs/runs"

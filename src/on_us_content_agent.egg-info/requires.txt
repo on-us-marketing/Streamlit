@@ -1,0 +1,8 @@
+streamlit<2,>=1.36
+python-dotenv>=1.2.0
+pyyaml>=6.0.0
+google-auth<3,>=2.30
+requests<3,>=2.32
+
+[crewai]
+crewai>=1.15.2
